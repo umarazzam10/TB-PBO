@@ -2,9 +2,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Login extends Admin{
-
+    //method untuk login
     public void login(){
-
+        //implementasi Hashmap untuk proses login
         HashMap<String,String> login = new HashMap();
 
         login.put("umar", "oemarr10");
@@ -20,6 +20,7 @@ public class Login extends Admin{
         System.out.print("Password : ");
         String password = scannerInput.nextLine();
 
+        //perulangan jika password salah
         while (!login.containsKey(username) && login.get(password).equals(password)) {
             System.err.println("LOGIN GAGAL, SILAHKAN LOGIN KEMBALI\n");
             System.out.print("Username : ");

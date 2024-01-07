@@ -7,11 +7,13 @@ public class App {
         String pilihanUser;
         boolean isLanjutkan = true;
 
+        //Objek untuk menjalankan method
         Admin admin = new Admin();
         Login adm = new Login();
-
+        //melakukan login
         adm.login();
         
+        //perulangan untuk menampilkan menu aplikasi
         while (isLanjutkan) {
             clearScreen();
             System.out.println("Database ShowRoom Thelema\n");
@@ -25,6 +27,7 @@ public class App {
             System.out.print("\n\nPilihan anda: ");
             pilihanUser = terminalInput.next();
 
+            //memilih fitur yang akan dijalankan
             switch (pilihanUser) {
                 case "1":
                     clearScreen();
@@ -77,7 +80,7 @@ public class App {
         }
 
     }
-
+        //method untuk membersihkan terminal
         private static void clearScreen(){
         try {
             if (System.getProperty("os.name").contains("Windows")){

@@ -17,12 +17,15 @@ public class Admin implements CRUD{
     @Override
     public void viewData() throws SQLException{
         try {
+                //Query SQL untuk melihat data dari tabel showroom
                 String sql = "SELECT * FROM showroom";
+                //koneksi ke database
                 conn = DriverManager.getConnection(url, "root", "");
                 Statement st = conn.createStatement();
+                //mengeksekusi Query
                 ResultSet result = st.executeQuery(sql);
 
-                //perulangan agar data yang ditampilkan tidak hanya 1
+                //perulangan agar data yang ditampikan semuanya
                 while (result.next()) {
                     System.out.println("No Faktur \t: " + result.getString("Faktur"));
                     System.out.println("Nama Pelanggan \t: " + result.getString("Nama"));
@@ -68,11 +71,15 @@ public class Admin implements CRUD{
         //Percabangan yang bergantung pada boolean
         if (isTambah) {
             try{
+                //koneksi ke database
                 conn = DriverManager.getConnection(url, "root", "");
                 Statement st = conn.createStatement();
+                //Query SQL untuk memasukkan data ke database
                 String sql = "INSERT INTO showroom (Faktur, Nama, no_HP, Alamat, Barang, Harga, Jumlah, Total) VALUES ('"+ faktur 
                 + "','"+ nama + "','"+ noHP + "','"+ alamat + "','"+ namaBarang + "','"+ hargaBarang + "','"+ jmlBarang + "','"+ totalBayar + "') ";
+                //eksekusi query SQL
                 st.execute(sql);    
+                //pesan jika data berhasil ditambah ke database
                 System.out.println("DATA BERHASIL DITAMBAHKAN");
 
                 } catch (Exception e) {
@@ -90,6 +97,7 @@ public class Admin implements CRUD{
 
         System.out.println("Masukkan No Faktur Pelanggan yang ingin diubah : ");
         faktur = scanner.next();
+        //koneksi ke database
         conn = DriverManager.getConnection(url, "root", "");
         Statement st = conn.createStatement();
 
@@ -101,6 +109,7 @@ public class Admin implements CRUD{
         Scanner terminalInput = new Scanner(System.in);
         Integer PilihanUser = terminalInput.nextInt();
 
+        //memilih data yang ingin di ubah
         switch (PilihanUser) {
             case 1:
                 System.out.print("Masukkan Nama Baru : ");
@@ -109,6 +118,7 @@ public class Admin implements CRUD{
                 noHP = scanner.next();
                 System.out.print("Masukkan Alamat baru : ");
                 alamat = scanner.next();
+                //Query SQL untuk mengubah data di database
                 String sql = "UPDATE showroom SET Nama = '%s', no_HP = '%s', Alamat = '%s' WHERE Faktur ='%s'";
                 sql = String.format(sql, nama, noHP,alamat, faktur);
                 st.executeUpdate(sql);
@@ -122,6 +132,7 @@ public class Admin implements CRUD{
                 System.out.print("Masukkan Jumlah : ");
                 jmlBarang = scanner.nextInt();
                 totalBayar = hargaBarang*jmlBarang;
+                //Query SQL untuk mengubah data di database
                 String sql2 = "UPDATE showroom SET Barang = '%s', Harga = '%s', Jumlah = '%s', Total = '%s' WHERE Faktur ='%s'";
                 sql2 = String.format(sql2, namaBarang, hargaBarang, jmlBarang, totalBayar, faktur);
                 st.executeUpdate(sql2);
@@ -140,11 +151,12 @@ public class Admin implements CRUD{
         try {
             System.out.print("Masukkan Faktur Pelanggan yang ingin dihapus : ");
             faktur = scanner.next();
-
+            //koneksi ke database
             conn = DriverManager.getConnection(url, "root", "");
-            String sql = String.format("DELETE FROM showroom WHERE Faktur ='%s'", faktur);
             Statement st = conn.createStatement();
-
+            //Query SQL untuk menghapus data di database
+            String sql = String.format("DELETE FROM showroom WHERE Faktur ='%s'", faktur);
+            //eksekusi Query SQL
             st.executeUpdate(sql);
             System.out.println("Berhasil menghapus data pelanggan dengan No Faktur = " + faktur);
 
@@ -162,7 +174,9 @@ public class Admin implements CRUD{
         faktur = scanner.next();
 
         try {
+            //koneksi ke database
             conn = DriverManager.getConnection(url, "root", "");
+            //Query SQL untuk menampilkan data sesuai dengan no Faktur
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM showroom WHERE Faktur =?");
             pst.setString(1, faktur);
             ResultSet result = pst.executeQuery();
@@ -171,6 +185,7 @@ public class Admin implements CRUD{
             SimpleDateFormat hari = new SimpleDateFormat("'Hari/Tanggal \t:' EEEEEEEEEE dd-mm-yy");
             SimpleDateFormat jam =  new SimpleDateFormat("'Waktu \t\t:' hh:mm:ss z");
 
+            //menampilkan struk
             if (result.next()) {
             System.out.println("----------- ShowRoom Thelema -----------");
             System.out.println(hari.format(date));
